@@ -6,7 +6,7 @@
 
 {% for obj in featured_list %}
 
-{{obj.title}}<br/>
+{% include 'products/snippets/card.html' with instance=obj %}
 
 
 {% endfor %}

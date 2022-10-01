@@ -5,8 +5,8 @@ from .views import home_page ,account , accounts, login_page, register_page
 
 urlpatterns =[
 #path('response/', home_page),
-path('',accounts),
-path('login/',login_page),
-path('register/', register_page),
-path('accounts/<str:pk>', account),
+path('',accounts, name='home'),
+path('login/',login_page, name='login'),
+path('register/', register_page, name='register'),
+path('accounts/<str:pk>', account, name='account'),
 ]

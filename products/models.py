@@ -1,3 +1,8 @@
+from email.policy import default
+from pyexpat import model
+from ssl import create_default_context
+from trace import Trace
+from django.urls import reverse
 from random  import Random
 import os
 import re
@@ -41,12 +46,17 @@ class Product(models.Model):
     price       = models.DecimalField(decimal_places=2, max_digits=19, default=0.00)
     image       = models.ImageField(upload_to='products/', null=True, blank=True)
     featured    = models.BooleanField(default=False)
+    tags        = models.ManyToManyField('Tag', blank=True)
+    vote_total  = models.IntegerField(default=0, null=True, blank=True)
+    vote_ratio  = models.IntegerField(default=0, null=True, blank=True)
+    create      = models.DateField(auto_now_add=True)
+
 
     objects = ProductManager()
 
 
     def get_absolute_url(self):
-        return "/products_detail/{slug}".format(slug=self.slug)
+        return reverse("products:list", kwargs={ "slug":self.slug})
 
     def __str__(self):
         return self.title
@@ -57,3 +67,27 @@ def product_pre_save_receiver(sender, instance, *args, **kwargs):
         instance.slug = unique_slug_generator(instance)
 
 pre_save.connect(product_pre_save_receiver, sender=Product)
+
+
+class Review(models.Model):
+    VOTE_TYPE = (
+        ('up', 'Up Vote'),
+        ('down','Down Vote')
+    )
+    #owner =
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    body = models.TextField(null=True, blank=True)
+    value = models.CharField(max_length=200, choices=VOTE_TYPE)
+    created = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.value
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=500)
+    created = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+

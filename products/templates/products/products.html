@@ -5,12 +5,9 @@
 
 
 {% for obj in object_list %}
-
-<a href="{{ obj.get_absolute_url}}">{{obj.title}}</a><br/>
+    {% include 'products/snippets/card.html' with instance=obj %}
 
 
 {% endfor %}
-
-{{object_list.get_absolute_url}}
 
 {% endblock content  %}
