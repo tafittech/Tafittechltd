@@ -12,8 +12,6 @@ def product_page(request):
     return render(request,'products/products.html',context)
 
 
-
-
 def featured_product(request):
     instance = Product.objects.featured()
     context ={
