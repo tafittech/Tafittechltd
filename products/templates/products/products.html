@@ -3,11 +3,15 @@
 
 {% block content %}
 
-
+<div class="contianer">
+    <div class="row">
 {% for obj in object_list %}
-    {% include 'products/snippets/card.html' with instance=obj %}
+        <div class="col">
+        {% include 'products/snippets/card.html' with instance=obj %}
 
-
+    </div>
 {% endfor %}
 
+    </div>
+</div>
 {% endblock content  %}

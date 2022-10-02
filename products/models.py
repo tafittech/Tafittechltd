@@ -2,10 +2,11 @@ from email.policy import default
 from pyexpat import model
 from ssl import create_default_context
 from trace import Trace
+from xml.etree.ElementTree import QName
 from django.urls import reverse
 from random  import Random
 import os
-import re
+from django.db.models import Q
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 
@@ -29,12 +30,41 @@ def  upload_image_path(instance, filename):
         final_filename=final_filename
         )
 # Create Your Model Manager here.
+class ProductQuerySet(models.query.QuerySet):
+    
+
+    def featured(self):
+        return self.filter(featured=True)
+
+    def search(self, query):
+        lookups = (
+            Q(title__icontains=query)| 
+            Q(description__icontains=query)| 
+            Q(price__icontains=query)
+            )
+        return self.filter(lookups).distinct()
+
 
 
 class ProductManager(models.Manager):
-    def featured(self):
-        return self.get_queryset().filter(featured=True)
+    def get_queryset(self):
+        return ProductQuerySet(self.model, using=self._db)
 
+
+    def all(self):
+        return self.get_queryset().all()
+    
+    def featured(self):
+        return self.get_queryset().featured()
+
+    def get_by_pk(self, pk):
+        qs = self.get_queryset().filter(pk=pk)
+        if qs.count() == 1:
+            return qs.first()
+        return None
+    
+    def search(self, query):
+        return self.get_queryset().search(query)
 
 
 
@@ -56,7 +86,7 @@ class Product(models.Model):
 
 
     def get_absolute_url(self):
-        return reverse("products:detail", kwargs={ "slug":self.slug})
+        return reverse("detail", kwargs={ "slug":self.slug})
 
     def __str__(self):
         return self.title
