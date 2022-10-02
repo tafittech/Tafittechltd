@@ -1,3 +1,17 @@
+{% url 'home' as home_url %}
+{% url 'list' as products %}
+{% url 'login' as log_in%}
+{% url 'contact' as contact_form %}
+{% url 'register' as register %}
+
+
+
+
+
+
+
+
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">{% if brand_name %}{{brand_name}} {% else %}Tafit Auction{% endif %}</a>
@@ -6,11 +20,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'home'%}">Home</a>
+          <li class="nav-item {%if request.path == home_url%}active{%endif%}">
+            <a class="nav-link" aria-current="page" href="{{home_url}}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">contact</a>
+            <a class="nav-link" href="{{contact_form}}">contact</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -23,9 +37,21 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">products</a>
+          <li class="nav-item{% if request.path == products %}active{% endif %}">
+            <a class="nav-link" href="{{products}}" tabindex="-1" aria-disabled="true">products</a>
           </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{log_in}}">logout</a>
+          </li>
+          {% else%}
+          <li class="nav-item">
+            <a class="nav-link" href="{{register}}">register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{log_in}}">login</a>
+          </li>
+          {% endif %}
         </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

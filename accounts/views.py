@@ -11,6 +11,14 @@ def home_page(requedt):
     return HttpResponse("HELLO WORLD THE AUCTION WILL BE THE BEST!")
 
 def accounts(request):
+    context={
+        "title":"Tafit Auction ",
+        "content":"Welcome to the Account Profile ",
+    }
+    return render(request, 'accounts/accounts.html', context)
+
+
+def contact_form(request):
     contact_form = ContactForm(request.POST or None)
     context={
         "title":"Acounts",
@@ -24,7 +32,7 @@ def accounts(request):
     #    print(request.POST.get('fullname'))
     #    print(request.POST.get('email'))
     #    print(request.POST.get('content'))
-    return render(request, 'accounts/accounts.html', context)
+    return render(request, 'auth/contact.html', context)
 
 def login_page(request):
     form = LoginForm(request.POST or None)
