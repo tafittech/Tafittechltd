@@ -4,12 +4,20 @@
 {% block content %}
 
 
+<div class="<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-6">
+        {{object.title}}<br/>
+            <img src="{{object.image.url}}" class="img-fluid" /><br/>
+        {{object.description}}<br/>
+        {{object.price}}
 
+        
+        </div>
+      </div>
+    </div>
+  </div>"
 
-{{object.title}}<br/>
-<img src="{{object.image.url}}" class="img-fluid" /><br/>
-{{object.description}}<br/>
-{{object.price}}
 
 
 

@@ -3,6 +3,7 @@
 {% url 'login' as log_in%}
 {% url 'contact' as contact_form %}
 {% url 'register' as register %}
+{% url 'cart' as cart %}
 
 
 
@@ -39,6 +40,9 @@
           </li>
           <li class="nav-item{% if request.path == products %}active{% endif %}">
             <a class="nav-link" href="{{products}}" tabindex="-1" aria-disabled="true">products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{cart}}">cart</a>
           </li>
           {% if request.user.is_authenticated %}
           <li class="nav-item">
