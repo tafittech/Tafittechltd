@@ -1,0 +1,73 @@
+{% url 'home' as home_url %}
+{% url 'list' as products %}
+{% url 'login' as log_in%}
+{% url 'contact' as contact_form %}
+{% url 'register' as register %}
+{% url 'cart' as cart %}
+
+{% url 'under_construction' as maintenance %}
+{% url 'home_page' as home %}
+{% url 'login' as login %}
+{% url 'logout' as logout %}
+{% url 'featured' as rated %}
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="https://sites.google.com/view/tafit-tech-limited"><img src="..." alt="" width="30" height="24">Tafit Tech Limited</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" aria-current="page">
+          <a class="nav-link {% if request.path == home %}active{% endif %}"  href="{{home}}">Home</a>
+        </li>
+        <li class="nav-item" aria-current="page" >
+          <a class="nav-link {% if request.path == maintenance %}active{% endif %} " href="{{maintenance}}">how it works</a>
+        </li>
+         <li class="nav-item" aria-current="page" >
+          <a class="nav-link {% if request.path == products %}active{% endif %}"  href="{{products}}">Products</a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item" aria-current="page" >
+          <a class="nav-link {% if request.path == login %}active{% endif %} " href="{{logout}}">Login Out</a>
+        </li>
+        {% else %}
+         <li class="nav-item" aria-current="page" >
+          <a class="nav-link {% if request.path == register %}active{% endif %} " href="{{register}}">register</a>
+        </li>
+         <li class="nav-item" aria-current="page" >
+          <a class="nav-link {% if request.path == login %}active{% endif %} " href="{{login}}">Login In</a>
+        </li>
+        {% endif %}
+         <li class="nav-item dropdown" aria-current="page" >
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{{maintenance}}">coming soon</a></li>
+            <li><a class="dropdown-item" href="{{products}}">products</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{rated}}">featured</a></li>
+          </ul>
+        </li>
+        <li class="nav-item {% if request.path == cart %}active{% endif %}">
+          <a class="nav-link " href="{{cart}}" >{{request.session.cart_items}}<i class="fas fa-shopping-cart"></i> </a>
+        </li>
+      </ul>
+      {% include 'search/snippets/search-form.html' %} 
+    </div>
+  </div>
+</nav>
+  

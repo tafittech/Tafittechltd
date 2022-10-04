@@ -1,5 +1,13 @@
 {% extends 'base/base.html'%}
 
-{%  block content %}
+{% block content %}
 
-{% endblock content %}
+    <h2>Welcome to Tafit Tech Limited this site is presently under construction</h2>
+   
+    {% endblock content %}
+
+{% block featured%}
+            {% for obj in product_list%}                 
+      {% include 'products/snippets/card.html'  with product=obj%}    
+            {% endfor %} 
+ {% endblock featured %} 

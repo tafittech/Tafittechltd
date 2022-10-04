@@ -19,7 +19,7 @@ def cart_home_page(request):
                 cart_obj.user = request.user
                 cart_obj.save()
         else:
-            cart_obj = Carts.objects.new_cart(user=request.user)
+            cart_obj = Carts.objects.new_cart()
             request.session['cart_id']=cart_obj.id
     return render(request, 'cart/cart-home.html', {})
 
