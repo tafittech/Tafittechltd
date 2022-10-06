@@ -15,7 +15,7 @@ def cart_home_page(request):
     if cart_id is None:
         if qs.count() == 1:
             cart_obj = qs.first()
-            if request.user.is_authenticated() and cart_obj.user is None:
+            if request.user.is_authenticated and cart_obj.user is None:
                 cart_obj.user = request.user
                 cart_obj.save()
         else:
