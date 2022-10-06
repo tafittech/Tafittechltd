@@ -10,6 +10,7 @@ from .models import Carts
 
 # Create your views here.
 def cart_home_page(request):
+#   cart_obj = Carts.objects.new_or_get(request)
     cart_id = request.session.get('cart_id', None)
     qs = Carts.objects.filter(id=cart_id)
     if cart_id is None:
